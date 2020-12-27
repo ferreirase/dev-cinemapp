@@ -26,7 +26,17 @@ interface Movie {
 }
 
 const Dashboard: React.FC = () => {
+  const [favoritedMovies, setFavoritedMovies] = useState<Movie[]>(() => {
+    const storageRepositories = localStorage.getItem('favoriteds');
+
+    if (storageRepositories) {
+      return JSON.parse(storageRepositories);
+    }
+    return [];
+  });
+
   const [inputMovie, setInputMovie] = useState('');
+
   const [movies, setMovies] = useState([]);
 
   const handleMovieInputChange = useCallback((e: any) => {
@@ -49,8 +59,6 @@ const Dashboard: React.FC = () => {
       alert('Erro na busca do filme! Tente novamente em instantes.');
     }
   }, [inputMovie, setMovies]);
-
-  const favoritedMovies: Array<Movie> = [];
 
   return (
     <>
